@@ -28,7 +28,7 @@ import com.alibaba.nacos.api.utils.StringUtils;
  * @since 1.0.0
  */
 public class NamingUtils {
-    
+
     /**
      * Returns a combined string with serviceName and groupName. serviceName can not be nil.
      *
@@ -46,10 +46,14 @@ public class NamingUtils {
         if (StringUtils.isBlank(serviceName)) {
             throw new IllegalArgumentException("Param 'serviceName' is illegal, serviceName is blank");
         }
+
+        // DEFAULT_GROUP@@nacos.test.3
         final String resultGroupedName = groupName + Constants.SERVICE_INFO_SPLITER + serviceName;
+
+        //如果常量池中存在当前字符串, 就会直接返回当前字符串. 如果常量池中没有此字符串, 会将此字符串放入常量池中后, 再返回
         return resultGroupedName.intern();
     }
-    
+
     public static String getServiceName(final String serviceNameWithGroup) {
         if (StringUtils.isBlank(serviceNameWithGroup)) {
             return StringUtils.EMPTY;
@@ -59,7 +63,7 @@ public class NamingUtils {
         }
         return serviceNameWithGroup.split(Constants.SERVICE_INFO_SPLITER)[1];
     }
-    
+
     public static String getGroupName(final String serviceNameWithGroup) {
         if (StringUtils.isBlank(serviceNameWithGroup)) {
             return StringUtils.EMPTY;
@@ -69,7 +73,7 @@ public class NamingUtils {
         }
         return serviceNameWithGroup.split(Constants.SERVICE_INFO_SPLITER)[0];
     }
-    
+
     /**
      * check combineServiceName format. the serviceName can't be blank.
      * <pre>
@@ -88,7 +92,7 @@ public class NamingUtils {
                     "Param 'serviceName' is illegal, it should be format as 'groupName@@serviceName'");
         }
     }
-    
+
     /**
      * Returns a combined string with serviceName and groupName. Such as 'groupName@@serviceName'
      * <p>This method works similar with {@link com.alibaba.nacos.api.naming.utils.NamingUtils#getGroupedName} But not
@@ -105,7 +109,7 @@ public class NamingUtils {
     public static String getGroupedNameOptional(final String serviceName, final String groupName) {
         return groupName + Constants.SERVICE_INFO_SPLITER + serviceName;
     }
-    
+
     /**
      * <p>Check instance param about keep alive.</p>
      *
